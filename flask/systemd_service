@@ -1,0 +1,15 @@
+# systemd service file to communicate with docker-compose
+# You should have already pulled/loaded your project image into docker
+# and have docker-compose.yml file in project folder
+[Unit]
+Description=your_project_description
+After=network.target docker.service
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/home/user/your_project_folder
+ExecStart=/usr/local/bin/docker-compose -f /home/user/your_project_folder/docker-compose.yml up
+ExecStop=/usr/local/bin/docker-compose -f /home/user/your_project_folder/docker-compose.yml down
+#Restart=always
+[Install]
+WantedBy=multi-user.target
